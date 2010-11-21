@@ -1,5 +1,7 @@
 function [EList, numE] = five_point(points1_orig, points2_orig)
 
+% points2' * inv(K2') * E * inv(K1) * points1 = 0
+
 %size calc
 %points_size = size(points1_orig);
 %N = points_size(1);
@@ -33,10 +35,12 @@ end
 %Step 1 - extract nullspace using SVD
 [U,S,V] = svd(Q);
 lastIndex = 5;
-X = V(:, lastIndex);
-Y = V(:, lastIndex-1);
-Z = V(:, lastIndex-2);
-W = V(:, lastIndex-3);
+% I think we want to use end rather than lastIndex to find the right null
+% space - Andrew 11/21/2010
+X = V(:, end-3);
+Y = V(:, end-2);
+Z = V(:, end-1);
+W = V(:, end);
 
 %rehape X,Y,Z,W to 3x3
 X = reshapeMatrix(X);
