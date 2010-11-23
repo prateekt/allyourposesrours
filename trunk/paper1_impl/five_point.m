@@ -34,7 +34,7 @@ end
 
 %Step 1 - extract nullspace using SVD
 [U,S,V] = svd(Q);
-lastIndex = 5;
+
 % I think we want to use end rather than lastIndex to find the right null
 % space - Andrew 11/21/2010
 X = V(:, end-3);
@@ -63,6 +63,7 @@ constraints_i = 1;
 
 %compute det(E) constraint and put in constraints cell arr
 det_E =  o2(o1(E(1,2),E(2,3)) - o1(E(1,3),E(2,2)),E(3,1)) + o2(o1(E(1,3),E(2,1)) - o1(E(1,1),E(2,3)),E(3,2)) + o2(o1(E(1,1),E(2,2)) - o1(E(1,2),E(2,1)),E(3,3));
+constraints = cell(1,10);
 constraints{constraints_i} = det_E;
 constraints_i = constraints_i + 1;
 
@@ -100,8 +101,12 @@ numConstraints = constraints_i -1;
 
 %compute A
 A = zeros(numConstraints,20);
+%compute the ordering of coefficients that we want coeffs function to give
+%ideally give us (though it will the coefficients in the order that its designed to give us).
+NORM = x^3 + 2*y^3 + 3*x^2*y + 4*x*y^2 + 5*x^2*z + 6*x^2 + 7*y^2*z + 8*y^2 + 9*x*y*z + 10*x*y + 11*x*z^2 + 12*x*z + 13*x + 14*y*z^2 + 15*y*z + 16*y + 17*z^3 + 18*z^2 + 19*z + 20;
+NORM_coeffs = double(coeffs(NORM));
 for i=1:numConstraints
-    A(i,:) = computeARow(constraints{i});
+    A(i,:) = computeARow(constraints{i}, NORM_coeffs);
 end
 
 %step 3 - Gauss-Jordan Elimination with Partial Pivoting on A (and compute
@@ -117,8 +122,8 @@ n = p1*B(3,1) + p2*B(3,2) + p3*B(3,3);
 n= simplify(n);
 
 %step 5 - root extraction
-coeffs = sym2poly(n);
-rootsList = roots(coeffs);
+polyCoeffs = sym2poly(n);
+rootsList = roots(polyCoeffs);
 rootsList_size = size(rootsList);
 numRoots =  rootsList_size(1);
 

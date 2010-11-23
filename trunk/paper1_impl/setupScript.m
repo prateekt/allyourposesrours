@@ -20,3 +20,6 @@ for i = 1:length(EList)
     plot3(P(:,1), P(:,2), P(:,3), '.')
 end
 
+%demonstrate camera matrix recovery
+M2 = robustCameraRecovery(EList{1}, pts_1,pts_2)
+cameraCenter = computeCameraCenter(M2)
