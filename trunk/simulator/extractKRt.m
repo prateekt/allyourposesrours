@@ -1,3 +1,4 @@
+function [ P, K, R, t ] = extractKRt(data)
 
 numPos = size(data,1);
 
@@ -21,3 +22,4 @@ for i = 1:numPos
 end
 
 
+end
