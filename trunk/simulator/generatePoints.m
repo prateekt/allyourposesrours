@@ -8,6 +8,7 @@ pointList = [X(:), Y(:), Z(:)];
 
 % DEBUG: View points
 figure, plot3(pointList(:,1), pointList(:,2), pointList(:,3), '.'); 
+title('Original 3D points');
 
 end
 
