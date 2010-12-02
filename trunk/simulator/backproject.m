@@ -29,9 +29,7 @@ for i = 1:size(pts_1, 1)
     
     % Take the last column of V
     h = V(:,end);
-    
-    keyboard
-    
+        
     % Scale by the homogeneous component
     h = h / h(end);
     

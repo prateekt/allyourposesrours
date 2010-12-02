@@ -19,15 +19,15 @@ load('templeSparseRing_data.mat');
 figure();
 plot3(idealReprojPoints(:,1), idealReprojPoints(:,2), idealReprojPoints(:,3), '.');
 title('Error-free reprojected points?');
-% 
-% % Calculate the essential matrix between the camera views
-% EList = five_point(pts1, pts2);
-% 
-% % Backproject the points into 3D and view them
-% for i = 1:length(EList)
-%    
-%     reprojPoints = triangulateWithE(pts1, pts2, EList{i}', K{1}, K{2});
-%     figure()
-%     plot3(reprojPoints(:,1), reprojPoints(:,2), reprojPoints(:,3), '.')
-% end
+
+% Calculate the essential matrix between the camera views
+EList = five_point(pts1, pts2);
+
+% Backproject the points into 3D and view them
+for i = 1:length(EList)
+   
+    reprojPoints = triangulateWithE(pts1, pts2, EList{i}', K{1}, K{2});
+    figure()
+    plot3(reprojPoints(:,1), reprojPoints(:,2), reprojPoints(:,3), '.')
+end
 
