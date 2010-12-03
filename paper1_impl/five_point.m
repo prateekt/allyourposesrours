@@ -1,4 +1,4 @@
-function [EList, numE] = five_point(points1_orig, points2_orig)
+function [EList, numE] = five_point(points1_orig, points2_orig, K1, K2)
 
 % points2' * inv(K2') * E * inv(K1) * points1 = 0
 
@@ -6,6 +6,15 @@ function [EList, numE] = five_point(points1_orig, points2_orig)
 %points_size = size(points1_orig);
 %N = points_size(1);
 N=5;
+
+% NOTES: Normalizing makes sense but it makes the results look worse. Maybe
+% there is a project with this function. Remember to de-normalize the
+% points at the end.
+% Normalize the points to fix numerical stability issues. This function
+% also converts points to homogenous coordinates
+%[points1, T1] = normalize_points(points1_orig);
+%[points2, T2] = normalize_points(points2_orig);
+
 
 %convert to homogenous coords
 points1 = zeros(N,3);
@@ -15,12 +24,19 @@ for i=1:N
     points2(i,:) = [points2_orig(i,:), 1];
 end
 
+
+% Premultiply by inv(K1) and inv(K2)
+points1 = K1 \ points1';
+points2 = K2 \ points2';
+points1 = points1';
+points2 = points2';
+
 %compute Q
 Q = zeros(N,9);
 for i=1:N
     
     %extract params
-    q1 = points1(i,1); 
+    q1 = points1(i,1);
     q2 = points1(i,2);
     q3 = points1(i,3);
     q1_prime = points2(i,1);
@@ -144,9 +160,10 @@ for i=1:numRoots
         %compute E using params
         E_rtn = x_rtn*X + y_rtn*Y + z_rtn*Z + w_rtn*W;
         
-        %store in EList
+        % Un-normalize and store in EList
+        %EList{EList_i} = T2' * E_rtn * T1;
         EList{EList_i} = E_rtn;
-        EList_i = EList_i + 1;    
+        EList_i = EList_i + 1;
     end
 end
 numE = EList_i - 1;
