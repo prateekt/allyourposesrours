@@ -1,10 +1,10 @@
-function [ pts1, pts2 ] = projectPoints( pointList, P1, P2 )
+function [ pts1, pts2 ] = projectPoints( pointList, M1, M2 )
 %projectPoints Project the points onto each image plane
 
 % pointList: n-by-3 list of points in the form (x, y, z) and with n number
 % of points.
 
-% P1 and P2: 3-by-4 project matrices
+% M1 and M2: 3-by-4 project matrices
 
 % pts1 and pts2: n-by-2 list of normalized points in the form (x, y)
 
@@ -13,8 +13,8 @@ numPoints = size(pointList, 1);
 % Convert points to homogenous coordinates
 pointList = [ pointList, ones(numPoints, 1) ]';
 
-pts1 = P1 * pointList;
-pts2 = P2 * pointList;
+pts1 = M1 * pointList;
+pts2 = M2 * pointList;
 
 
 % Transpose pts1 and pts2 so they list points as (x,y,w)

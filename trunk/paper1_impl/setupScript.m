@@ -8,7 +8,7 @@ load('corresp_7pt.mat');
 % See http://vision.middlebury.edu/mview/data/
 load('intrinsics.mat');
 
-EList = five_point(pts_1, pts_2);
+EList = five_point(pts_1, pts_2, K1, K2);
 
 load('many_corresp.mat');
 

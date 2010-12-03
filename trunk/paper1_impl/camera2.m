@@ -12,7 +12,8 @@ S = [0 -u3(3) u3(2) ; u3(3) 0 -u3(1) ; -u3(2) u3(1) 0];
 %                 inv(U) * S = Z*U'
 %              (inv(U) * S)' = U*Z'
 %  (inv(U) * (inv(U) * S)')' = Z
-Z = (inv(U) * (inv(U) * S)')';
+%Z = (inv(U) * (inv(U) * S)')';
+Z = (U \(U \ S)')';
 
 % Can compute W given knowledge of structure of Z
 % -----------
@@ -28,5 +29,5 @@ M2_3 = K2*[U*W'*V', u3];
 M2_4 = K2*[U*W'*V', -u3];
 
 % works for temple
-M2 = M2_2;
+M2 = M2_3;
 end
