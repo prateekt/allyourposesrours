@@ -1,7 +1,10 @@
-function [EList, numE] = five_point(points1, points2, K1, K2)
+function [EList, numE] = five_point(points1, points2)
 
-% Note: Points need to be normalized before being passed to algorithm.
-% points2' * inv(K2') * E * inv(K1) * points1 = 0
+% Note: Points need to be normalized with camera intrinsics (K1 and K2)
+% before being passed to algorithm. They also need to be in homogeneous
+% coordinates.
+
+% points2' * E * points1 = 0
 
 %size calc
 %points_size = size(points1_orig);
@@ -15,22 +18,6 @@ N=5;
 % also converts points to homogenous coordinates
 %[points1, T1] = normalize_points(points1_orig);
 %[points2, T2] = normalize_points(points2_orig);
-
-
-%convert to homogenous coords
-% points1 = zeros(N,3);
-% points2 = zeros(N,3);
-% for i=1:N
-%     points1(i,:) = [points1_orig(i,:), 1];
-%     points2(i,:) = [points2_orig(i,:), 1];
-% end
-
-
-% % Premultiply by inv(K1) and inv(K2)
-% points1 = K1 \ points1';
-% points2 = K2 \ points2';
-% points1 = points1';
-% points2 = points2';
 
 %compute Q
 Q = zeros(N,9);
