@@ -39,7 +39,7 @@ axis equal;
 
 %% Backprojection with error-free E and calculated projection matrices
 E = findGndTruthE(R{1}, t{1}, R{2}, t{2});
-reprojPoints = triangulateWithE(pts1, pts2, E', K{1}, K{2});
+reprojPoints = triangulateWithE(pts1, pts2, E, K{1}, K{2});
 
 %% Nister's 5-point implementation
 % Evec = calibrated_fivepoint(h_pts2', h_pts1');
@@ -62,13 +62,15 @@ minSumError = inf;
 
 for i=1:length(EList)
   E = EList{i};
+  i
   % Check determinant constraint! 
   error_determinate = det( E);
   % Check trace constraint
   error_trace = 2 *E*transpose(E)*E -trace( E*transpose(E))*E;
+
   % Check reprojection errors
   error_reprojection = diag( h_pts2 * E * h_pts1');
-  sum_error_proj = sum(abs(error_reprojection));
+  sum_error_proj = sum(abs(error_reprojection))
   
   % Find E with the smallest error
   if (sum_error_proj < minSumError)
@@ -79,6 +81,6 @@ for i=1:length(EList)
 end
 
 % Show the points in 3D backprojected with the best E.
-triangulateWithE(pts1, pts2, bestE', K{1}, K{2});
+triangulateWithE(pts1, pts2, bestE, K{1}, K{2});
 
 
