@@ -14,7 +14,7 @@ P_C = [R_b t_u];
 P_D = [R_b -1*t_u];
 
 %cheirality constraint
-Q = triangulate(E, q, q_prime, P_A);
+Q = triangulate2(E, q, q_prime, P_A);
 c1 = Q(3)*Q(4);
 PAQ = P_A*Q;
 c2 = PAQ(3)*Q(4);
