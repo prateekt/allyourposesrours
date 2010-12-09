@@ -1,7 +1,7 @@
 function [E_ground_truth, E_noise, E_ERROR] = noiseSim(p,q,K1,K2)
 
 %infer ground truth E from p and q
-E_ground_truth = fiveteen_point(p,q,K1,K2);
+E_ground_truth = fifteen_point(p,q,K1,K2);
 
 %perturb points a bit with gaussian noise
 p_disturbed = zeros(15,3);
@@ -12,7 +12,7 @@ for i=1:15
 end
 
 %infer E with noise
-E_noise = fiveteen_point(p_disturbed, q_disturbed, K1, K2);
+E_noise = fifteen_point(p_disturbed, q_disturbed, K1, K2);
 
 %squared error between ground truth E and E with noise
 E_ERROR=0;
