@@ -21,6 +21,7 @@ for i=10:15
 end
 
 %using first five correspondences, do 5 point algorithm and generate EList
+% Resulting E{i} from EList satisfies b_i' * E{i} * a_i
 EList = five_point(a_i, b_i);
 
 %use next 5 points to find correct E
@@ -32,15 +33,22 @@ for i=1:size(EList,2)
     E = EList{i};
     
     %Compute F from E
-    F = inv(K1)' * E * inv(K2);
+    %F = inv(K1)' * E * inv(K2);
+  
+    % We've already premultiplied the points by the intrinsic camera
+    % matrices so we don't have do it again.
+    F = E;
     
     %sum distances to Epipolar line
     sum=0;
     for j=1:5
         p = f_i(j,:)';
         p_prime = g_i(j,:)';
-        sum = sum + distToEL(p, F, p_prime);
+        % I think you should use transpose of F here
+        sum = sum + distToEL(p, F', p_prime);
     end
+    
+    fprintf('E number: %u  Error: %f\n', i, sum);
     
     %save min sum
     if(sum < minSum)
@@ -51,11 +59,20 @@ end
 EFinal = correctE;
 
 %Use final correspondences to independently test quality of E.
-F = inv(K1)' * EFinal * inv(K2);
+% F = inv(K1)' * EFinal * inv(K2);
+% Same here regarding the intrinsic matrices
+F = EFinal;
 ERROR_SUM = 0;
 for j=1:5
     p = h_i(j,:)';
     p_prime = j_i(j,:)';
-    ERROR_SUM = ERROR_SUM + distToEL(p, F, p_prime);
+    % I think you should use transpose of F here
+    ERROR_SUM = ERROR_SUM + distToEL(p, F', p_prime);
 end
+
+% The ERROR_RATIO gives misleading (possibility bad) results when ERROR_SUM
+% is roughly equal to zero, which is the case in simulation.
 ERROR_RATIO  = abs(ERROR_SUM-minSum)/ ERROR_SUM;
+fprintf('EFinal error: %f \n', ERROR_SUM);
+
+end
