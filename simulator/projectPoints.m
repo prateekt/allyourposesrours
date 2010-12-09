@@ -27,6 +27,7 @@ pts1 = pts1(:,1:2) ./ repmat(pts1(:,3), 1, 2);
 pts2 = pts2(:,1:2) ./ repmat(pts2(:,3), 1, 2);
 
 % DEBUG: View points
+%{
 figure();
 subplot(2,2,1);
 plot(pts1(:,1), pts1(:,2), '.');
@@ -34,6 +35,7 @@ title('Camera 1 view:');
 subplot(2,2,2);
 plot(pts2(:,1), pts2(:,2), '.');
 title('Camera 2 view');
+%}
 
 % Show correspondences
 % subplot(2,1,2);
