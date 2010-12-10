@@ -72,7 +72,8 @@ end
 
 % The ERROR_RATIO gives misleading (possibility bad) results when ERROR_SUM
 % is roughly equal to zero, which is the case in simulation.
-ERROR_RATIO  = abs(ERROR_SUM-minSum)/ ERROR_SUM;
+% ERROR_RATIO  = abs(ERROR_SUM-minSum)/ ERROR_SUM;
+ERROR_RATIO  = ERROR_SUM / 5;
 fprintf('EFinal error: %f \n', ERROR_SUM);
 
 end
