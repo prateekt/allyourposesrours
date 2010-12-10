@@ -1,7 +1,10 @@
 function [E_ground_truth, E_noise, E_ERROR] = noiseSim(p,q,K1,K2)
 
+%{
 %infer ground truth E from p and q
 E_ground_truth = fifteen_point(p,q,K1,K2);
+%}
+E_ground_truth = 1;
 
 %perturb points a bit with gaussian noise
 p_disturbed = zeros(15,3);
