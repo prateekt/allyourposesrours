@@ -4,10 +4,10 @@ function [p,q,K1,K2] = fifteen_point_data2(R1,t1, K1, R2, t2, K2)
 [pointList] = generatePoints();
 
 %compute camera projection matrices, P1 and P2
-% P1 = K1*[R1 t1'];
-% P2 = K2*[R2 t2'];
-P1 = K1*[R1' -R1'*t1'];
-P2 = K2*[R2' -R2'*t2'];
+P1 = K1*[R1 t1'];
+P2 = K2*[R2 t2'];
+% P1 = K1*[R1' -R1'*t1'];
+% P2 = K2*[R2' -R2'*t2'];
 
 
 %% Project the 3D points onto each camera's normalized image plane
