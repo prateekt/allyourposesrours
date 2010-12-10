@@ -21,9 +21,9 @@ h_pts1 = h_pts1';
 h_pts2 = h_pts2';
 
 %choose first 15 points to be p and q
-p = zeros(15,3);
-q = zeros(15,3);
-for i=1:15
+p = zeros(5,3);
+q = zeros(5,3);
+for i=1:5
     p(i,:) = h_pts1(i,:);
     q(i,:) = h_pts2(i,:);
 end
