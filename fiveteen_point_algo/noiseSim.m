@@ -12,12 +12,13 @@ for i=1:15
 end
 
 %infer E with noise
-E_noise = fifteen_point(p_disturbed, q_disturbed, K1, K2);
+[E_noise, E_ERROR] = fifteen_point(p_disturbed, q_disturbed, K1, K2);
+E_ERROR
 
 %squared error between ground truth E and E with noise
-E_ERROR=0;
-for i=1:3
-    for j=1:3
-        E_ERROR = E_ERROR + abs(E_ground_truth(i,j)-E_noise(i,j));
-    end
-end
+% E_ERROR=0;
+% for i=1:3
+%     for j=1:3
+%         E_ERROR = E_ERROR + abs(E_ground_truth(i,j)-E_noise(i,j));
+%     end
+% end
