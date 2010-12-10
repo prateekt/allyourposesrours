@@ -4,10 +4,11 @@ function [p,q,K1,K2] = fifteen_point_data2(R1,t1, K1, R2, t2, K2)
 [pointList] = generatePoints();
 
 %compute camera projection matrices, P1 and P2
-
-
-P1 = K1*[R1 t1'];
+% P1 = K1*[R1 t1'];
+% P2 = K2*[R2 t2'];
+P1 = K1*[R1' t1'];
 P2 = K2*[R2 t2'];
+
 
 %% Project the 3D points onto each camera's normalized image plane
 [pts1, pts2] = projectPoints(pointList, P1, P2);
@@ -23,9 +24,14 @@ h_pts1 = h_pts1';
 h_pts2 = h_pts2';
 
 %choose first 15 points to be p and q
-p = zeros(15,3);
-q = zeros(15,3);
-for i=1:15
-    p(i,:) = h_pts1(i,:);
-    q(i,:) = h_pts2(i,:);
+% p = zeros(15,3);
+% q = zeros(15,3);
+% for i=1:15
+%     p(i,:) = h_pts1(i,:);
+%     q(i,:) = h_pts2(i,:);
+% end
+
+% Matlab friendly version
+p = h_pts1(1:15,:);
+q = h_pts2(1:15,:);
 end
