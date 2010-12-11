@@ -13,7 +13,7 @@ for i=1:size(pts_1,1)
     q = pts_1(i,:);
     q_prime = pts_2(i,:);
     
-    [correctP,CASE] = recoverCameraMat(E, q, q_prime);
+    [correctP,CASE] = recoverCameraMat(E, q', q_prime');
     
     %increment based on case
     if(CASE==1)
